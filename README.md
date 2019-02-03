@@ -1,11 +1,13 @@
 # Docker Wordpress Template
 a boilerplate for my docker wordpress development setup
 includes:
-- docker for devops
-- apache php for wordpress
-- mysql for database
+* docker for devops
+* apache php for wordpress
+* mysql for database
+* nginx for docker proxy
 
 structure:
+```
 /repo
     /db
     /devops
@@ -23,14 +25,15 @@ structure:
                 /nginx     -> any config for nginx?
 
     /source
+```
 
 ## Nginx for internal proxy
-In docker there's internal and external networking,
-this makes it complicated to wire up the .local domains we're developing on
-we're using a local nginx as reverse proxy to reroute all dev domains to internal docker ips
+* In docker there's internal and external networking,
+* this makes it complicated to wire up the .local domains we're developing on
+* we're using a local nginx as reverse proxy to reroute all dev domains to internal docker ips
 
 ## Usage
-We will need to generate the .env file will required docker variables in docker-compose.yml first
-and then add the local domain in the host's /etc/hosts and refresh the host dns
-should be able to do it by just adding '127.0.0.1    domain.local' (our proxy container will resolve this)
-then we can start the docker containers and run the wp environment locally
+* We will need to generate the .env file will required docker variables in docker-compose.yml first
+* and then add the local domain in the host's /etc/hosts and refresh the host dns
+* should be able to do it by just adding '127.0.0.1    domain.local' (our proxy container will resolve this)
+* then we can start the docker containers and run the wp environment locally
