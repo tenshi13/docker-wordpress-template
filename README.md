@@ -33,7 +33,19 @@ structure:
 * we're using a local nginx as reverse proxy to reroute all dev domains to internal docker ips
 
 ## Usage
-* We will need to generate the .env file will required docker variables in docker-compose.yml first
+* We will need to generate the .env file will required docker variables in docker-compose.yml first, see .env.sample
 * and then add the local domain in the host's /etc/hosts and refresh the host dns
 * should be able to do it by just adding '127.0.0.1    domain.local' (our proxy container will resolve this)
 * then we can start the docker containers and run the wp environment locally
+* at the /devops/docker/ folder
+```
+docker-compose -f docker-compose.yml up
+```
+* once it settles you should be able to browse to your_site.local
+* just modify the codes in /source folder to update your wordpress code
+
+# Credits/References
+* https://github.com/jwilder/nginx-proxy
+  the nginx proxy's author repo, awesome work that made life heaps easier
+* https://hub.docker.com/_/mysql
+* https://hub.docker.com/_/wordpress/
