@@ -37,3 +37,9 @@ structure:
 * and then add the local domain in the host's /etc/hosts and refresh the host dns
 * should be able to do it by just adding '127.0.0.1    domain.local' (our proxy container will resolve this)
 * then we can start the docker containers and run the wp environment locally
+
+# Credits/References
+* https://github.com/jwilder/nginx-proxy
+  the nginx proxy's author repo, awesome work that made life heaps easier
+* https://hub.docker.com/_/mysql
+* https://hub.docker.com/_/wordpress/
