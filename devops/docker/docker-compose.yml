@@ -24,7 +24,7 @@ services:
     image: mysql:5.7
     volumes:
       - ./db/dbstart:/docker-entrypoint-initdb.d
-      - ./db/mysql/db:/var/lib/mysql
+      - ./db/mysql:/var/lib/mysql
     restart: always
     environment:
       MYSQL_DATABASE: ${WP_DB}
