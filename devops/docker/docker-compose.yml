@@ -3,7 +3,7 @@ version: '3.7'
 services:
   wp:
     hostname: ${WP_LOCAL_DOMAIN}
-    image: wordpress:5.0.3-php7.1-apache
+    image: ${WP_IMAGE}
     volumes:
       - ./web/wordpress:/var/www/html
       - ./web/php/php.ini:/usr/local/etc/php/php.ini
@@ -17,6 +17,9 @@ services:
       WORDPRESS_DB_USER: ${WP_USER}
       WORDPRESS_DB_PASSWORD: ${WP_PASS}
       WORDPRESS_DB_NAME: ${WP_DB}
+    depends_on:
+      - mysql
+      - nginx-proxy
     networks:
       - default
 
@@ -39,7 +42,7 @@ services:
     container_name: docker-wp-proxy
     ports:
       - "80:80"
-      - '443:443'
+      - "443:443"
     volumes:
       - '/var/run/docker.sock:/tmp/docker.sock:ro'
       - './proxy/nginx/unrestricted_client_body_size.conf:/etc/nginx/conf.d/unrestricted_client_body_size.conf'

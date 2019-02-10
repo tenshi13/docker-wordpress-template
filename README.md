@@ -32,6 +32,15 @@ structure:
 * this makes it complicated to wire up the .local domains we're developing on
 * we're using a local nginx as reverse proxy to reroute all dev domains to internal docker ips
 
+## Kickstarting a new WP site
+clone project into website folder
+```
+git clone git@github.com:tenshi13/docker-wordpress-template.git site_domain.tld
+```
+remove the .git folder and redo git init
+the first docker up run will generate/copy the wordpress's core files into the /source folder
+add everything and commit it, then push it as the initial commit/PR
+
 ## Usage
 * We will need to generate the .env file will required docker variables in docker-compose.yml first, see .env.sample
 * and then add the local domain in the host's /etc/hosts and refresh the host dns
