@@ -38,7 +38,14 @@ clone project into website folder
 git clone git@github.com:tenshi13/docker-wordpress-template.git site_domain.tld
 ```
 remove the .git folder and redo git init
-the first docker up run will generate/copy the wordpress's core files into the /source folder
+```
+rm -rf .git
+```
+re-add a remote repo
+```
+git remote add origin repo_url
+```
+the first docker up run will generate/copy the wordpress's core files into the /source folder  
 add everything and commit it, then push it as the initial commit/PR
 
 ## Usage
