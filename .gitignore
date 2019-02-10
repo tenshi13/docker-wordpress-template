@@ -69,8 +69,6 @@ source/wp-content/backups/
 source/wp-content/blogs.dir/
 source/wp-content/cache/
 source/wp-content/upgrade/
-source/wp-content/uploads/
-source/wp-content/mu-plugins/
 source/wp-content/wp-cache-config.php
 source/wp-content/plugins/hello.php
 
