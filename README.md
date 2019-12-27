@@ -9,22 +9,31 @@ includes:
 structure:
 ```
 /repo
-    /db
+    /mysql
+        /data    -> placeholder folder to store backup sqls
+        /db      -> actual folder where mysql db files will live
+        /dbstart -> place to put wordpress db startup sqls
+
     /devops
         /docker
             /db
-                /bin     -> dirty ETL scripts
-                /mysql   -> ../../../db (actual db files)
-                /data    -> folder used to store backedup data, later processed by scripts in bin to load into local db
-                /dbstart -> any mysql startup script? maybe to use in the begining
+                /mysql   -> ../../../mysql/db
+                /dbstart -> ../../../mysql/dbstart
             /web
-                /apache    -> any apache specific configs?
-                /php       -> any php specific configs?
-                /wordpress -> ../../../source (actual source)
+                /apache     -> any apache specific configs?
+                /php        -> any php specific configs?
+                /phpmyadmin -> ../../../phpmyadmin
+                /wordpress  -> ../../../wordpress
             /proxy
                 /nginx     -> any config for nginx?
 
-    /source
+    /phpmyadmin -> TODO: want to add phpmyadmin to this project
+
+    /wordpress -> actual folder where wordpress code will live
+
+    /tools -> scripts to manage the project
+        /db     -> scripts related to db operations
+        /vendor -> 3rd party libraries
 ```
 
 ## Nginx for internal proxy
@@ -45,7 +54,7 @@ re-add a remote repo
 ```
 git remote add origin repo_url
 ```
-the first docker up run will generate/copy the wordpress's core files into the /source folder  
+the first docker up run will generate/copy the wordpress's core files into the /source folder
 add everything and commit it, then push it as the initial commit/PR
 
 ## Usage

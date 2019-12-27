@@ -62,21 +62,21 @@ bower_components
 ### WordPress ###
 *.log
 *error_log
-source/wp-config.php
-source/wp-content/advanced-cache.php
-source/wp-content/backup-db/
-source/wp-content/backups/
-source/wp-content/blogs.dir/
-source/wp-content/cache/
-source/wp-content/upgrade/
-source/wp-content/wp-cache-config.php
-source/wp-content/plugins/hello.php
+wordpress/wp-config.php
+wordpress/wp-content/advanced-cache.php
+wordpress/wp-content/backup-db/
+wordpress/wp-content/backups/
+wordpress/wp-content/blogs.dir/
+wordpress/wp-content/cache/
+wordpress/wp-content/upgrade/
+wordpress/wp-content/wp-cache-config.php
+wordpress/wp-content/plugins/hello.php
 
-source/.htaccess
-source/license.txt
-source/readme.html
-source/sitemap.xml
-source/sitemap.xml.gz
+wordpress/.htaccess
+wordpress/license.txt
+wordpress/readme.html
+wordpress/sitemap.xml
+wordpress/sitemap.xml.gz
 
 ### docker-wordpress-template specifics ###
 *.env
