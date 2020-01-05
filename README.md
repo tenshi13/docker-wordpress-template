@@ -1,6 +1,7 @@
 # Docker Wordpress Template
-a boilerplate for my docker wordpress development setup
-includes:
+A boilerplate for local docker wordpress development setup<br />
+NOTE: Not production ready<br />
+Includes:
 * docker for devops
 * apache php for wordpress
 * mysql for database
