@@ -33,7 +33,7 @@ services:
       MYSQL_DATABASE: ${WP_DB}
       MYSQL_USER: ${WP_USER}
       MYSQL_PASSWORD: ${WP_PASS}
-      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASS}
+      MYSQL_ROOT_PASSWORD: ${WP_PASS}
     networks:
       - default
 
