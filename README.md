@@ -75,3 +75,30 @@ docker-compose -f docker-compose.yml up
   the nginx proxy's author repo, awesome work that made life heaps easier
 * https://hub.docker.com/_/mysql
 * https://hub.docker.com/_/wordpress/
+
+# TODO:
+Problem with docker-wordpress-template
+- Issue : We can use localhost with port forwarding but this is annoying when juggling multiple projects
+- Found traefik - and edge reverse proxy, we can forward to local domain, instead of port
+- Issue:  then .dev and local ssl cert
+- Found mkcert, need to bake it into part of the Init/setup script
+
+## Mkcert
+see: 
+- https://geekflare.com/local-dev-environment-ssl/
+https://www.freecodecamp.org/news/how-to-get-valid-ssl-certificates-for-local-development-ca228240fad2/ - simpler
+
+Mkcert needs to issue the root cert, install it
+Then use it to generate a cert for the local site
+Place it somewhere, and we need to config the servers where to find that cert when it starts the server
+
+## Traefik
+see:
+- https://hollo.me/devops/routing-to-multiple-docker-compose-development-setups-with-traefik.html
+After generating the certs, we can add them to the label of traffic
+
+Now we can wrap mkcert and traefik in each individual project independantly
+
+### TODO tasks:
+- Create mkcert docker image, avoid multi platform dev issues
+- Update docker-wordpress-template
