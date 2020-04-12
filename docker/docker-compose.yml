@@ -25,15 +25,31 @@ services:
   mysql:
     image: mysql:5.7
     volumes:
-      - ./mysql:/tmp/dbdata
+      - ../mysql:/tmp/dbdata
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: wpdb
-      MYSQL_USER: wpuser
-      MYSQL_PASSWORD: wppass
+      MYSQL_ROOT_PASSWORD: ${COMPOSE_PROJECT_NAME}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     networks:
       - traefik_net
+
+  phpmyadmin:
+    depends_on:
+      - mysql
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: ${MYSQL_USER}
+      PMA_PASSWORD: ${MYSQL_PASSWORD}
+    networks:
+      - traefik_net
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-phpmyadmin.rule=Host(`pma.wptest.localhost`)"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-phpmyadmin.entrypoints=web"
 
   wordpress:
     depends_on:
@@ -41,16 +57,16 @@ services:
       - traefik
     image: wordpress:latest
     volumes:
-      - ./wordpress:/var/www/html
+      - ../wordpress:/var/www/html
     ports:
       - "80"
     networks:
       - traefik_net
     environment:
-      WORDPRESS_DB_HOST: mysql
-      WORDPRESS_DB_USER: wpuser
-      WORDPRESS_DB_PASSWORD: wppass
-      WORDPRESS_DB_NAME: wpdb
+      WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
+      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
+      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
+      WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-wordpress.rule=Host(`wptest.localhost`)"
