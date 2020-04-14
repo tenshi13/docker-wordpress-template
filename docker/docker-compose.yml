@@ -44,11 +44,12 @@ services:
       PMA_HOST: mysql
       PMA_USER: ${MYSQL_USER}
       PMA_PASSWORD: ${MYSQL_PASSWORD}
+      UPLOAD_LIMIT: 3000000000
     networks:
       - traefik_net
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-phpmyadmin.rule=Host(`pma.wptest.localhost`)"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-phpmyadmin.rule=Host(`pma.${LOCAL_DOMAIN}`)"
       - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-phpmyadmin.entrypoints=web"
 
   wordpress:
@@ -69,7 +70,7 @@ services:
       WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-wordpress.rule=Host(`wptest.localhost`)"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-wordpress.rule=Host(`${LOCAL_DOMAIN}`)"
       - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-wordpress.entrypoints=web"
 
 networks:
