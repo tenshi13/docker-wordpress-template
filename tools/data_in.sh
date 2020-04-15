@@ -1,18 +1,19 @@
 #!/bin/bash
 source ../docker/.env
 
+source_domain=$LIVE_DOMAIN
+target_domain=$LOCAL_DOMAIN
+
 if [ -z "$1" ]
   then
-    echo "Need to pass in the path to file as a parameter"
+    echo "Need to pass in the filename.sql in the data_in folder"
+    echo "This replaces $source_domain to $target_domain, making sql ready for import to local db"
     exit 1
 fi
 
 dir_path="../data_in/"
 source_path=${dir_path}${1}
 target_path=${source_path//'.sql'/'_in.sql'}
-
-source_domain=$LIVE_DOMAIN
-target_domain=$LOCAL_DOMAIN
 
 if [ ! -f "$source_path" ]; then
     echo "$source_path does not exist"

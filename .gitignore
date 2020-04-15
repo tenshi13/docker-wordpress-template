@@ -82,6 +82,7 @@ wordpress/sitemap.xml.gz
 *.env
 *.sql
 *.zip
+*.gz
 wordpress
 
 
