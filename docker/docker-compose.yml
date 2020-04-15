@@ -1,0 +1,78 @@
+version: '3.3'
+
+services:
+  traefik:
+    # The official v2.0 Traefik docker image
+    image: "traefik:v2.2"
+    # Enables the web UI and tells Traefik to listen to docker
+    command:
+      - "--log.level=DEBUG"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+    ports:
+      # The HTTP port
+      - "80:80"
+      # The Web UI (enabled by --api.insecure=true)
+      - "8080:8080"
+    volumes:
+      # So that Traefik can listen to the Docker events
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - traefik_net
+
+  mysql:
+    image: mysql:5.7
+    volumes:
+      - ../mysql:/tmp/dbdata
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${COMPOSE_PROJECT_NAME}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    networks:
+      - traefik_net
+
+  phpmyadmin:
+    depends_on:
+      - mysql
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: ${MYSQL_USER}
+      PMA_PASSWORD: ${MYSQL_PASSWORD}
+      UPLOAD_LIMIT: 3000000000
+    networks:
+      - traefik_net
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-phpmyadmin.rule=Host(`pma.${LOCAL_DOMAIN}`)"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-phpmyadmin.entrypoints=web"
+
+  wordpress:
+    depends_on:
+      - mysql
+      - traefik
+    image: wordpress:latest
+    volumes:
+      - ../wordpress:/var/www/html
+    ports:
+      - "80"
+    networks:
+      - traefik_net
+    environment:
+      WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
+      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
+      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
+      WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-wordpress.rule=Host(`${LOCAL_DOMAIN}`)"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-wordpress.entrypoints=web"
+
+networks:
+  traefik_net:
+    external: true

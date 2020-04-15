@@ -80,9 +80,9 @@ wordpress/sitemap.xml.gz
 
 ### docker-wordpress-template specifics ###
 *.env
-db/**
-devops/docker/db/data/**
-devops/docker/db/dbstart/**
-devops/docker/web/wordpress/**
+*.sql
+*.zip
+*.gz
+wordpress
 
 
