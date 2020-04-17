@@ -11,9 +11,12 @@ services:
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
     ports:
       # The HTTP port
       - "80:80"
+      # The HTTPS port
+      - "443:443"
       # The Web UI (enabled by --api.insecure=true)
       - "8080:8080"
     volumes:
@@ -71,7 +74,8 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-wordpress.rule=Host(`${LOCAL_DOMAIN}`)"
-      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-wordpress.entrypoints=web"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-wordpress.entrypoints=websecure"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-wordpress.tls=true"
 
 networks:
   traefik_net:

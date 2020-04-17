@@ -1,6 +1,11 @@
 #!/bin/bash
 source ../docker/.env
 
+# Mac SED issues : sed: RE error: illegal byte sequence
+# see : https://stackoverflow.com/questions/19242275/re-error-illegal-byte-sequence-on-mac-os-x
+export LC_CTYPE=C
+export LANG=C
+
 source_domain=$LIVE_DOMAIN
 target_domain=$LOCAL_DOMAIN
 
@@ -26,8 +31,8 @@ echo "Count : $ccount"
 if [ $ccount -gt 0 ]
 then
     sed 's/https:\/\/$source_domain/https:\/\/$target_domain/g' $source_path > $target_path;
-    sed -i '' "s/http:\/\/$source_domain/http:\/\/$target_domain/g" $target_path
-    sed -i '' "s/$source_domain/$target_domain/g" $target_path
+    sed -i '' "s/http:\/\/$source_domain/http:\/\/$target_domain/g" $target_path;
+    sed -i '' "s/$source_domain/$target_domain/g" $target_path;
     echo "data in sql at : $target_path"
 else
     echo "no result, exiting"
